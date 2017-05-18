@@ -14,6 +14,7 @@ public class Library {
 	static void printOpeningHours() {
 		System.out.println("Libraries are open daily from 9am to 5pm.");
 	}
+	// Add the missing implementation to this class
 
 	void addBook(Book newBook) {
 		bookCatalog[numBooks] = newBook;
@@ -36,7 +37,7 @@ public class Library {
 			System.out.println("Sorry, this book is not in our catalog");
 			return;
 		}
-		for (int i = 0; i < bookCatalog.length; i++)
+		for (int i = 0; i < bookCatalog.length; i++)// look through books
 		{
 			if (bookCatalog[i].borrowed == true) {
 				System.out.println("Sorry, this book is already borrowed");
@@ -50,13 +51,15 @@ public class Library {
 	}
 
 	void returnBook(String string) {
-		for (int i = 0; i < bookCatalog.length; i++) {
+		for (int i = 0; i < bookCatalog.length; i++){
 			if (bookCatalog[i].getTitle().equals(string)) {
 				System.out.println("You successfully returned " + string);
 				bookCatalog[i].returned();
-			}
+		}
 		}
 	}
+
+
 
 	public static void main(String[] args) {
 
@@ -95,10 +98,10 @@ public class Library {
 		System.out.println();
 
 		// // Return The Lords of the Rings to the first library
-		System.out.println("Returning The Lord of the Rings:");
-		firstLibrary.returnBook("The Lord of the Rings");
-		System.out.println();
-
+		 System.out.println("Returning The Lord of the Rings:");
+		 firstLibrary.returnBook("The Lord of the Rings");
+		 System.out.println();
+		
 		// // Print the titles of available from the first library
 		System.out.println("Books available in the first library:");
 		firstLibrary.printAvailableBooks();
