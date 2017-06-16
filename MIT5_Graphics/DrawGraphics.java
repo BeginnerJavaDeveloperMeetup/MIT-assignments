@@ -1,56 +1,46 @@
-
 import java.awt.Color;
-import java.util.ArrayList;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 public class DrawGraphics {
-	BouncingBox box;
-	Oval oval;
-	ArrayList<BouncingBox> boxes = new ArrayList<BouncingBox>();
-	ArrayList<Oval> ovals = new ArrayList<Oval>();
-	
-	/** Initializes this class for drawing. */
-	public DrawGraphics() {
-		box = new BouncingBox(200, 50, Color.RED);
-		boxes.add(new BouncingBox(10, 10, Color.BLUE));
-		boxes.add(new BouncingBox(100, 100, Color.GREEN));
-		boxes.add(new BouncingBox(200, 200, Color.YELLOW));
-		boxes.add(new BouncingBox(100, 100, Color.BLACK));
-		boxes.add(new BouncingBox(100, 100, Color.ORANGE));
-		boxes.add(new BouncingBox(100, 100, Color.magenta));
-		boxes.get(0).setMovementVector(1, 0);
-		boxes.get(1).setMovementVector(-3, -2);
-		boxes.get(2).setMovementVector(0, -2);
-		boxes.get(3).setMovementVector(1, 0);
-		boxes.get(4).setMovementVector(-3, -2);
-		boxes.get(5).setMovementVector(0, -1);
-		oval = new Oval(180,200, 80,90, Color.RED);
-		ovals.add(new Oval(140,80,20,80,Color.GREEN));
-		ovals.get(0).setMovementVector(2, -2);
-		
-	}
+    BouncingBox box;
+    ArrayList<BouncingBox> boxes = new ArrayList<BouncingBox>();
+    ArrayList<BouncingOval> ovals = new ArrayList<BouncingOval>();
 
-	/**
-	 * Draw the contents of the window on surface. Called 20 times per second.
-	 */
-	public void draw(Graphics surface) {
-		surface.drawLine(50, 50, 250, 250);
-		box.draw(surface);
-		surface.drawOval(100, 80, 75, 110);
-		surface.setColor(Color.cyan);
-		surface.fillOval(100, 80, 75, 110);
-		surface.draw3DRect(150, 200, 120, 80, true);
-		surface.setColor(Color.pink);
-		surface.fill3DRect(150, 200, 120, 80, true);
-		surface.setColor(Color.BLUE);
-		surface.drawString("Hello There!!!", 100, 150);
-		
-		for(BouncingBox box: boxes){
-			box.draw(surface);
-		}
-		
-		for(Oval oval: ovals){
-			oval.draw(surface);
-		}
-	}
-}
+    /** Initializes this class for drawing. */
+    public DrawGraphics() {
+        int x = (int)(Math.random() * 3 + 1) - 3;
+        int y = (int)(Math.random() * 3 + 1) - 3;
+        for(int i = 0; i < 20; i++) {
+            int random = (int)(Math.random() * 10 + 1);
+            BouncingBox box = new BouncingBox(x, y, new Color((int)(Math.random()* 0x1000000)));
+            box.setMovementVector(x + 1 + random, y + 3 + random);
+            boxes.add(box);
+
+            BouncingOval oval = new BouncingOval(x + 4, y + 4, new Color((int)(Math.random()* 0x1000000)));
+            oval.setMovementVector(x - 2 + random, y + 1 + random);
+            ovals.add(oval);
+        }
+    }
+
+    /** Draw the contents of the window on surface. Called 20 times per second. */
+    public void draw(Graphics surface) {
+        for(int i = 0; i < 20; i++) {
+            boxes.get(i).draw(surface);
+            ovals.get(i).draw(surface);
+        }
+        /*
+        surface.drawLine(50, 50, 250, 250);
+        box.draw(surface);
+        surface.drawOval(20, 20, 100, 30);
+        surface.setColor(Color.blue);
+        surface.fillOval(21, 21, 99, 29);
+        surface.setColor(Color.green);
+        surface.fillRoundRect(20, 100, 50, 50, 2, 2);
+        surface.setColor(Color.cyan);
+        int[] xCoords = {20, 40, 60, 80, 100, 120, 140, 50, 20};
+        int[] yCoords = {220, 240, 260, 280, 100, 120, 140, 130, 20};
+        surface.drawPolygon(xCoords, yCoords, 9);
+*/
+    }
+} 

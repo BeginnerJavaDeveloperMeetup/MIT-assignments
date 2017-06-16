@@ -5,85 +5,107 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /** Displays a window and delegates drawing to DrawGraphics. */
-public class SimpleDraw extends JPanel implements Runnable {
-	private static final long serialVersionUID = -7469734580960165754L;
-	private boolean animate = true;
-	private final int FRAME_DELAY = 50; // 50 ms = 20 FPS
-	public static final int WIDTH = 300;
-	public static final int HEIGHT = 300;
-	private DrawGraphics draw;
+public class SimpleDraw extends JPanel implements Runnable {    
+    private static final long serialVersionUID = -7469734580960165754L;
+    private boolean animate = true;
+    private final int FRAME_DELAY = 50; // 50 ms = 20 FPS
+    public static final int WIDTH = 300;
+    public static final int HEIGHT = 300;
+    private DrawGraphics draw;
 
-	public SimpleDraw(DrawGraphics drawer) {
-		this.draw = drawer;
-	}
+    
+    public SimpleDraw(DrawGraphics drawer) {
+        this.draw = drawer;
+    }
 
-	/** Paint callback from Swing. Draw graphics using g. */
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		// Enable anti-aliasing for better looking graphics
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		draw.draw(g2);
-	}
+    /** Paint callback from Swing. Draw graphics using g. */
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
-	/** Enables periodic repaint calls. */
-	public synchronized void start() {
-		animate = true;
-	}
+        // Enable anti-aliasing for better looking graphics
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        draw.draw(g2);
+    }
 
-	/** Pauses animation. */
-	public synchronized void stop() {
-		animate = false;
-	}
+    /** Enables periodic repaint calls. */
+    public synchronized void start() {
+        animate = true;
+    }
 
-	private synchronized boolean animationEnabled() {
-		return animate;
-	}
+    /** Pauses animation. */
+    public synchronized void stop() {
+        animate = false;
+    }
 
-	public void run() {
-		while (true) {
-			if (animationEnabled()) {
-				repaint();
-			}
-			try {
-				Thread.sleep(FRAME_DELAY);
-			} catch (InterruptedException e) {
-				throw new RuntimeException(e);
-			}
-		}
-	}
+    private synchronized boolean animationEnabled() {
+        return animate;
+    }
 
-	public static void main(String args[]) {
-		final SimpleDraw content = new SimpleDraw(new DrawGraphics());
-		JFrame frame = new JFrame("Graphics!");
-		Color bgColor = Color.white;
-		frame.setBackground(bgColor);
-		content.setBackground(bgColor);
-		// content.setSize(WIDTH, HEIGHT);
-		// content.setMinimumSize(new Dimension(WIDTH, HEIGHT));
-		content.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-		// frame.setSize(WIDTH, HEIGHT);
-		frame.setContentPane(content);
-		frame.setResizable(false);
-		frame.pack();
-		frame.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
+    public void run() {
+        while (true) {
+            if (animationEnabled()) {
+                repaint();
+            }
 
-			public void windowDeiconified(WindowEvent e) {
-				content.start();
-			}
+            try {
+                Thread.sleep(FRAME_DELAY);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
-			public void windowIconified(WindowEvent e) {
-				content.stop();
-			}
-		});
-		new Thread(content).start();
-		frame.setVisible(true);
-	}
-}
+    public static void main(String args[]) {
+        final SimpleDraw content = new SimpleDraw(new DrawGraphics());
+        final SimpleDraw content_J = new SimpleDraw(new DrawGraphics_J());
+
+        JFrame frame = new JFrame("Cheryl's Box!");
+       
+        Color bgColor = Color.white;
+        frame.setBackground(bgColor);
+        content.setBackground(bgColor);
+//        content.setSize(WIDTH, HEIGHT);
+//        content.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        content.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+//        frame.setSize(WIDTH, HEIGHT);
+        frame.setContentPane(content);
+        frame.setResizable(false);
+        frame.pack();
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) { System.exit(0); }
+            public void windowDeiconified(WindowEvent e) { content.start(); }
+            public void windowIconified(WindowEvent e) { content.stop(); }
+        });
+
+        new Thread(content).start();
+
+        frame.setVisible(true);
+
+
+        // Altering to create a second frame
+        JFrame frame2 = new JFrame("Jen's Box!");
+
+        Color bgColor2 = Color.white;
+        frame2.setBackground(bgColor2);
+        content_J.setBackground(bgColor2);
+        content_J.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        frame2.setContentPane(content_J);
+        frame2.setResizable(false);
+        frame2.pack();
+        frame2.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) { System.exit(0); }
+            public void windowDeiconified(WindowEvent e) { content_J.start(); }
+            public void windowIconified(WindowEvent e) { content_J.stop(); }
+        });
+
+        new Thread(content_J).start();
+
+        frame2.setVisible(true);
+    }
+} 

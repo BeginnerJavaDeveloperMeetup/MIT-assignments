@@ -26,6 +26,12 @@ public class Oval {
 		color = startColor;
 	}
 
+	public Oval(int startX, int startY, Color startColor) {
+		x = startX;
+		y = startY;
+		color = startColor;
+	}
+
 	/** Draws the box at its current position on to surface. */
 	public void draw(Graphics surface) {
 		// Draw the object
