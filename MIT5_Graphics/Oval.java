@@ -26,10 +26,13 @@ public class Oval {
 		color = startColor;
 	}
 
-	public Oval(int startX, int startY, Color startColor) {
-		x = startX;
-		y = startY;
-		color = startColor;
+	// Default constructor - required because reasons
+	public Oval() {
+		x = 20;
+		y = 20;
+		height = 120;
+		width = 120;
+		color = Color.PINK;
 	}
 
 	/** Draws the box at its current position on to surface. */
