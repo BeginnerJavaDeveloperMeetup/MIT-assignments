@@ -63,8 +63,9 @@ public class SimpleDraw extends JPanel implements Runnable {
 
     public static void main(String args[]) {
         final SimpleDraw content = new SimpleDraw(new DrawGraphics());
+        final SimpleDraw content_J = new SimpleDraw(new DrawGraphics_J());
 
-        JFrame frame = new JFrame("Graphics!");
+        JFrame frame = new JFrame("Cheryl's Box!");
        
         Color bgColor = Color.white;
         frame.setBackground(bgColor);
@@ -85,5 +86,26 @@ public class SimpleDraw extends JPanel implements Runnable {
         new Thread(content).start();
 
         frame.setVisible(true);
+
+
+        // Altering to create a second frame
+        JFrame frame2 = new JFrame("Jen's Box!");
+
+        Color bgColor2 = Color.white;
+        frame2.setBackground(bgColor2);
+        content_J.setBackground(bgColor2);
+        content_J.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        frame2.setContentPane(content_J);
+        frame2.setResizable(false);
+        frame2.pack();
+        frame2.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) { System.exit(0); }
+            public void windowDeiconified(WindowEvent e) { content_J.start(); }
+            public void windowIconified(WindowEvent e) { content_J.stop(); }
+        });
+
+        new Thread(content_J).start();
+
+        frame2.setVisible(true);
     }
 } 
