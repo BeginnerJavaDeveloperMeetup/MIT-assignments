@@ -6,7 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-public class BouncingOval {
+public class Oval_C extends Oval {
     int x;
     int y;
     Color color;
@@ -21,7 +21,7 @@ public class BouncingOval {
      * with startColor.
      */
 
-    public BouncingOval(int startX, int startY, Color startColor) {
+    public Oval_C(int startX, int startY, Color startColor) {
         x = startX;
         y = startY;
         color = startColor;

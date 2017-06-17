@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.awt.Graphics;
 
+// This DrawGraphics class was made by Jen.
+
 public class DrawGraphics_J extends DrawGraphics {
 	BouncingBox box;
 	Oval oval;

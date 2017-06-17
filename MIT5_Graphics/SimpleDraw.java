@@ -61,19 +61,13 @@ public class SimpleDraw extends JPanel implements Runnable {
         }
     }
 
-    public static void main(String args[]) {
-        final SimpleDraw content = new SimpleDraw(new DrawGraphics());
-        final SimpleDraw content_J = new SimpleDraw(new DrawGraphics_J());
-
-        JFrame frame = new JFrame("Cheryl's Box!");
-       
+    // setFrame: Originally part of main() - sets the details of the box
+    // input: a frame (window), content (details of the bouncing objects inside it)
+    public static void setFrame(JFrame frame, SimpleDraw content) {
         Color bgColor = Color.white;
         frame.setBackground(bgColor);
         content.setBackground(bgColor);
-//        content.setSize(WIDTH, HEIGHT);
-//        content.setMinimumSize(new Dimension(WIDTH, HEIGHT));
         content.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-//        frame.setSize(WIDTH, HEIGHT);
         frame.setContentPane(content);
         frame.setResizable(false);
         frame.pack();
@@ -84,28 +78,21 @@ public class SimpleDraw extends JPanel implements Runnable {
         });
 
         new Thread(content).start();
-
         frame.setVisible(true);
+    }
 
+    public static void main(String args[]) {
+        final SimpleDraw content_C = new SimpleDraw(new DrawGraphics_C());
+        final SimpleDraw content_J = new SimpleDraw(new DrawGraphics_J());
 
-        // Altering to create a second frame
-        JFrame frame2 = new JFrame("Jen's Box!");
+        JFrame frame_C = new JFrame("Cheryl's Box!");
+        setFrame(frame_C, content_C);
 
-        Color bgColor2 = Color.white;
-        frame2.setBackground(bgColor2);
-        content_J.setBackground(bgColor2);
-        content_J.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        frame2.setContentPane(content_J);
-        frame2.setResizable(false);
-        frame2.pack();
-        frame2.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) { System.exit(0); }
-            public void windowDeiconified(WindowEvent e) { content_J.start(); }
-            public void windowIconified(WindowEvent e) { content_J.stop(); }
-        });
+        JFrame frame_J = new JFrame("Jen's Box!");
+        setFrame(frame_J, content_J);
 
-        new Thread(content_J).start();
-
-        frame2.setVisible(true);
+        // Add more below - requires a different frame and content name
+        // note that different DrawGraphics files must be named differently (filename, class name, constructor)
+        // and the "public class DrawGraphics..." bit should have "extends DrawGraphics" after it
     }
 } 
